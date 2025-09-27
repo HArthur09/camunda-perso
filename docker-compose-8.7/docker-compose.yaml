@@ -389,6 +389,21 @@ services:
     volumes:
       - postgres-web:/var/lib/postgresql/data
 
+   mailpit:
+    # If you want to use your own SMTP server, you can remove this container
+    # and configure RESTAPI_MAIL_HOST, RESTAPI_MAIL_PORT, REST_API_MAIL_USER,
+    # REST_API_MAIL_PASSWORD and RESTAPI_MAIL_ENABLE_TLS in web-modeler-restapi
+    container_name: mailpit
+    image: axllent/mailpit:v1.21.8
+    ports:
+      - "1025:1025"
+      - "8075:8025"
+    healthcheck:
+      test: /usr/bin/nc -v localhost 1025
+      interval: 30s
+    networks:
+      - web-modeler
+  
   web-modeler-restapi:
     container_name: web-modeler-restapi
     image: camunda/web-modeler-restapi:8.7.9
