@@ -39,9 +39,6 @@ services:
       - "JAVA_TOOL_OPTIONS=-Xms512m -Xmx512m"
       - management.endpoints.web.exposure.include=health,info,metrics,prometheus,configprops
       - MANAGEMENT_ENDPOINT_CONFIGPROPS_SHOW_VALUES=ALWAYS
-    env_file:
-      - path: .env
-        required: true
     restart: always
     healthcheck:
       test: ["CMD-SHELL", "timeout 10s bash -c ':> /dev/tcp/127.0.0.1/9600' || exit 1"]
@@ -135,9 +132,6 @@ services:
       - management.endpoints.web.exposure.include=health,info,metrics,prometheus,configprops
       - MANAGEMENT_ENDPOINT_CONFIGPROPS_SHOW_VALUES=ALWAYS
       - management.endpoint.health.probes.enabled=true
-    env_file:
-      - path: .env
-        required: true
     healthcheck:
       test: ["CMD-SHELL", "wget -O - -q 'http://localhost:9600/actuator/health/readiness'"]
       interval: 30s
